@@ -29,5 +29,5 @@ def exactChange35(test):
 
 @t.test(10)
 def handlesWrongInput(test):
-	test.test = lambda : assertlib.numberOnLine(0, lib.getLine(lib.outputOf(_fileName, stdinArgs=[-1, -1, -1, -1, -1, -1, -1, 0]), 0))
+	test.test = lambda : assertlib.numberOnLine(4, lib.getLine(lib.outputOf(_fileName, stdinArgs=[-1, -1, -1, -1, -1, -1, -1, 0.41]), 0))
 	test.description = lambda : "accepteert geen negatieve invoer"
