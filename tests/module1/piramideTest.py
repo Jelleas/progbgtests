@@ -5,7 +5,7 @@ import re
 
 @t.test(0)
 def exactMario0(test):
-	test.test = lambda : not assertlib.contains(lib.outputOf(_fileName, stdinArgs=[0]), "#")
+	test.test = lambda : not assertlib.contains(lib.outputOf(_fileName, stdinArgs=[1]), "##")
 	test.description = lambda : "print een pyramide van 0 hoog"
 
 @t.test(1)
@@ -51,5 +51,5 @@ def exactMario23(test):
 
 @t.test(10)
 def handlesWrongInput(test):
-	test.test = lambda : not assertlib.contains(lib.outputOf(_fileName, stdinArgs=[-100, 100, 24, 0]), "#")
+	test.test = lambda : not assertlib.contains(lib.outputOf(_fileName, stdinArgs=[-100, 100, 24, 1]), "##")
 	test.description = lambda : "handelt een verkeerde input van -100, 100 en 24 af"
