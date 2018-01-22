@@ -47,7 +47,7 @@ def hassimuleer_potjeAndsimuleer_groot_aantal_potjes_Monopoly(test):
 			info = "de functie simuleer_potje_Monopoly is gedefinieerd :) \n  - de functie simuleer_groot_aantal_potjes_Monopoly nog niet"
 		return test_potje and test_groot_aantal_potjes, info
 
-	test.test = testMethod
+	test.test = lambda : testMethod
 	test.description = lambda : "definieert de functie simuleer_potje_Monopoly en simuleer_groot_aantal_potjes_Monopoly"
 	test.timeout = lambda : 60
 
@@ -57,34 +57,29 @@ def hassimuleer_potjeAndsimuleer_groot_aantal_potjes_Monopoly(test):
 def correctAverageTrump(test):
 
 	def try_run():
+		
+		fail_type = ""
+		pos = {type(None): "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
+		 		str: "een woord of zin, zorg dat de functie een getal returnt", \
+				tuple: "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+		
 		try:	
 			testInput = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)()
-			test.success = lambda info : "De code werkt zonder startgeld, je kunt nu startgeld invoeren!"
+			type_output = type(testInput)
 			
-			type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)())
-			fail_type = ""
-			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
-			 		tuple: "een woord of zin, zorg dat de functie een getal returnt", \
-					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
 			if type_output != int:
 				fail_type = pos[type_output]
 				test.fail = lambda info : "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
-			
-			return testInput
 		
 		except:
 			testInput = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000)
-			
-			type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000))
-			fail_type = ""
-			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
-			 		tuple: "een woord of zin, zorg dat de functie een getal returnt",\
-					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+			type_output = type(testInput)
+		
 			if type_output != int:
 				fail_type = pos[type_output]
 				test.fail = lambda info : "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
 			
-			return testInput
+		return testInput if type(testInput) == int else 0
 
 	test.fail = lambda info : "de correcte waarde is ongeveer 147"
 	test.test = lambda : assertlib.between(try_run(), 145, 149)

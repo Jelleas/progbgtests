@@ -44,20 +44,20 @@ def correctAverageDiv(test):
 	def testMethod():
 		outcome = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1500, 1500)
 		
-		type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000))
-			fail_type = ""
-			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
-			 		tuple: "een woord of zin, zorg dat de functie een getal returnt",\
-					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+		type_output = type(outcome)
+		fail_type = ""
+		pos = {type(None): "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
+		 		str: "een woord of zin, zorg dat de functie een getal returnt", \
+				tuple: "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
 
 		if type_output != int:
 			fail_type = pos[type_output]
 			info =  "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
-		elif assertlib.between(outcome, 0, -99999999):
+		elif assertlib.between(outcome, -99999999, 0):
 			info = "Als speler 1 meer straten heeft dan speler 2 is het verschil positief"
 		else:
 			info = "Het verschil is niet erg groot, gemiddeld zelfs minder dan 1 straat"
-		return assertlib.between(outcome, .45, .15), info
+		return assertlib.between(outcome, .15, 0.45), info
 
 	test.test = testMethod
 	test.description = lambda : "Monopoly met twee spelers geeft de het correcte gemiddelde verschil in gekochten straten"
@@ -77,7 +77,6 @@ def correctAverageDiv(test):
 		return ""
 
 	line = findline(lib.outputOf(_fileName))
-	print line
 
 	if assertlib.numberOnLine(75, line):
 		test.fail = lambda info : "De gevonden waarde is 75 euro. Checkpy het programma nog een keer."
