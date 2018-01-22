@@ -22,22 +22,18 @@ def after():
 		pass
 
 
-@t.test(0)
-def hasworp_met_twee_dobbelstenen(test):
-	test.test = lambda : assertlib.fileContainsFunctionDefinitions(_fileName, "worp_met_twee_dobbelstenen")
-	test.description = lambda : "definieert de functie worp_met_twee_dobbelstenen"
-	test.timeout = lambda : 60
+# @t.test(0)
+# def hasworp_met_twee_dobbelstenen(test):
+# 	test.test = lambda : assertlib.fileContainsFunctionDefinitions(_fileName, "worp_met_twee_dobbelstenen")
+# 	test.description = lambda : "definieert de functie worp_met_twee_dobbelstenen"
+# 	test.timeout = lambda : 60
 
-
-# @t.passed(hasworp_met_twee_dobbelstenen)
-@t.test(10)
-def correctDice(test):
-	test.test = lambda : assertlib.between(lib.getFunction("worp_met_twee_dobbelstenen", _fileName)(), 2, 12)
-	test.description = lambda : "returnt een correcte waarde voor een worp van twee dobbelstenen"
-	test.timeout = lambda : 60
+# @t.test(10)
+# def correctDice(test):
+# 	test.test = lambda : assertlib.between(lib.getFunction("worp_met_twee_dobbelstenen", _fileName)(), 2, 12)
+# 	test.description = lambda : "returnt een correcte waarde voor een worp van twee dobbelstenen"
+# 	test.timeout = lambda : 60
 	
-
-# @t.passed(correctDice)
 @t.test(20)
 def hassimuleer_potjeAndsimuleer_groot_aantal_potjes_Monopoly(test):
 
@@ -64,15 +60,31 @@ def correctAverageTrump(test):
 		try:	
 			testInput = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)()
 			test.success = lambda info : "De code werkt zonder startgeld, je kunt nu startgeld invoeren!"
-			if assertlib.sameType(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(), None):
-				test.fail = lambda info : "Zorg er voor dat de functie simuleer_groot_aantal_potjes_Monopoly het gemiddeld aan benodigde worpen returnt en ook alleen deze waarde returnt"
+			
+			type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)())
+			fail_type = ""
+			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
+			 		tuple: "een woord of zin, zorg dat de functie een getal returnt", \
+					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+			if type_output != int:
+				fail_type = pos[type_output]
+				test.fail = lambda info : "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
+			
 			return testInput
+		
 		except:
 			testInput = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000)
-			if assertlib.sameType(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000), None):
-				test.fail = lambda info : "Zorg er voor dat de functie simuleer_groot_aantal_potjes_Monopoly het gemiddeld aan benodigde worpen returnt en ook alleen deze waarde returnt"
+			
+			type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000))
+			fail_type = ""
+			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
+			 		tuple: "een woord of zin, zorg dat de functie een getal returnt",\
+					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+			if type_output != int:
+				fail_type = pos[type_output]
+				test.fail = lambda info : "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
+			
 			return testInput
-
 
 	test.fail = lambda info : "de correcte waarde is ongeveer 147"
 	test.test = lambda : assertlib.between(try_run(), 145, 149)

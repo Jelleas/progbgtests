@@ -33,8 +33,8 @@ def hassimuleer_groot_aantal_potjes_Monopoly(test):
 		return False
 
 	test.test = try_run
-	test.fail = lambda info : "zorg dat de functie twee argumenten heeft, startgeld voor speler 1 en startgeld voor speler 2"
-	test.description = lambda : "definieert de functie simuleer_potje en simuleer_groot_aanal_potjes_Monopoly met twee argumenten"
+	test.fail = lambda info : "Zorg dat de functie twee argumenten heeft, startgeld voor speler 1 en startgeld voor speler 2"
+	test.description = lambda : "Definieert de functie simuleer_potje en simuleer_groot_aanal_potjes_Monopoly met twee argumenten"
 	test.timeout = lambda : 90
 
 
@@ -43,13 +43,21 @@ def hassimuleer_groot_aantal_potjes_Monopoly(test):
 def correctAverageDiv(test):
 	def testMethod():
 		outcome = lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1500, 1500)
-		if assertlib.sameType(outcome, None):
-			info = "Zorg er voor dat de functie simuleer_groot_aantal_potjes_Monopoly het verschil in het bezit van straten returnt en alleen deze waarde returnt"
-		elif assertlib.between(outcome, 0, 99999999):
-			info = "Als speler 1 meer straten heeft dan speler 2 is het verschil negatief"
+		
+		type_output = type(lib.getFunction("simuleer_groot_aantal_potjes_Monopoly", _fileName)(1000000))
+			fail_type = ""
+			pos = {str: "niks, zorg dat deze het gemiddeld aan benodigde worpen returnt",\
+			 		tuple: "een woord of zin, zorg dat de functie een getal returnt",\
+					type(None): "meerdere waarden, zorg dat deze alleen het gemiddeld aan benodigde worpen returnt"}
+
+		if type_output != int:
+			fail_type = pos[type_output]
+			info =  "De functie simuleer_groot_aantal_potjes_Monopoly returnt nu %s" %(fail_type)
+		elif assertlib.between(outcome, 0, -99999999):
+			info = "Als speler 1 meer straten heeft dan speler 2 is het verschil positief"
 		else:
 			info = "Het verschil is niet erg groot, gemiddeld zelfs minder dan 1 straat"
-		return assertlib.between(outcome, -.45, -.15), info
+		return assertlib.between(outcome, .45, .15), info
 
 	test.test = testMethod
 	test.description = lambda : "Monopoly met twee spelers geeft de het correcte gemiddelde verschil in gekochten straten"
