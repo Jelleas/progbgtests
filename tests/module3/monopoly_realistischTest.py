@@ -78,11 +78,11 @@ def correctAverageDiv(test):
 
 	line = findline(lib.outputOf(_fileName))
 
-	if assertlib.numberOnLine(75, line):
-		test.fail = lambda info : "De gevonden waarde is 75 euro. Checkpy het programma nog een keer."
 
-	test.test = lambda : assertlib.numberOnLine(125, line)
+	test.test = lambda : assertlib.numberOnLine(115, line, deviation = 15)
 	test.description = lambda : "Monopoly met twee spelers vindt het correcte extra startgeld voor speler 2"
 	test.timeout = lambda : 90
+
+
 
 
