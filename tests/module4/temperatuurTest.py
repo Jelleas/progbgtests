@@ -2,6 +2,11 @@ import checkpy.tests as t
 import checkpy.lib as lib
 import checkpy.assertlib as assertlib
 
+def sandbox():
+	lib.require("temperatuur.py")
+	lib.require("DeBiltTempMax.txt", "http://www.nikhef.nl/~ivov/Python/KlimaatData/DeBiltTempMax.txt")
+	lib.require("DeBiltTempMin.txt", "http://www.nikhef.nl/~ivov/Python/KlimaatData/DeBiltTempMin.txt")
+
 # Thanks to Vera Schild!
 
 @t.test(0)
