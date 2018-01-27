@@ -4,7 +4,6 @@ import checkpy.assertlib as assertlib
 import importlib
 
 def sandbox():
-	lib.require("autorit.py")
 	lib.require("AutoRitData.csv", "http://www.nikhef.nl/~ivov/Python/SensorData/AutoRitData.csv")
 
 def before():
