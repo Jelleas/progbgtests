@@ -28,8 +28,13 @@ def after():
 @t.test(0)
 def correctDistance(test):
 	def testMethod():
-		correctKm = assertlib.numberOnLine(10.86, lib.getLine(lib.outputOf(_fileName), 0), deviation = 0.02)
-		correctM = assertlib.numberOnLine(10860, lib.getLine(lib.outputOf(_fileName), 0), deviation = 20)
+		output = lib.outputOf(
+			test.fileName,
+			overwriteAttributes = [("__name__", "__main__")]
+		)
+		line = lib.getLine(output, 0)
+		correctKm = assertlib.numberOnLine(10.86, line, deviation = 0.02)
+		correctM = assertlib.numberOnLine(10860, line, deviation = 20)
 		return correctKm or correctM
 	test.test = testMethod
 	test.description = lambda : "print de afgelegde afstand"
